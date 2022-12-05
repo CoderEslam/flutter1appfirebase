@@ -39,20 +39,24 @@ class DatabaseService {
 
   // get user doc stream
   Stream<UserData> get userData {
-    return reference
+    var d = reference
         .doc(uid)
         .snapshots()
         .map((event) => _userDataFromSnapshot(event));
+    return d;
   }
 
   // use data from snapshot
 
   UserData _userDataFromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> documentSnapshot) {
-    return UserData(
-        uid,
-        documentSnapshot.data()!['name'],
-        documentSnapshot.data()!['sugars'],
-        documentSnapshot.data()!['strength']);
+    print('ESLAMDATAGHAZY ${documentSnapshot.data()!['strength']}');
+
+    UserData userData = UserData(
+        uid: uid,
+        name: documentSnapshot.data()!['name'],
+        sugars: documentSnapshot.data()!['sugars'],
+        strength: documentSnapshot.data()!['strength']);
+    return userData;
   }
 }
