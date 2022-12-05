@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter1appfirebase/Model/User.dart';
 import 'package:flutter1appfirebase/screens/Home/Home.dart';
-import 'package:flutter1appfirebase/screens/auth/Auth.dart';
+import 'package:flutter1appfirebase/screens/auth/Authantication.dart';
 import 'package:provider/provider.dart';
 
 class Wrapper extends StatelessWidget {
@@ -16,7 +16,7 @@ class Wrapper extends StatelessWidget {
     if (user.uid!='') {
       return Home();
     } else {
-      return Auth();
+      return Authantication();
     }
   }
 }

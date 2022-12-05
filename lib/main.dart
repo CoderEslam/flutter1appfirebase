@@ -5,7 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter1appfirebase/services/auth.dart';
 import 'package:provider/provider.dart';
 
-void main()  {
+void main() {
   runApp(const MyApp());
 }
 
@@ -15,12 +15,31 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Firebase.initializeApp(),
+    FirebaseOptions firebaseOptions = const FirebaseOptions(
+        apiKey: 'AIzaSyD0yGAIw0Mtx_89PnWOWjYgug0RQVsuUHA',
+        appId: '1:690341637278:web:355737232020fd271cdf8f',
+        messagingSenderId: '690341637278',
+        projectId: 'flutter1appfirebase',
+        authDomain: 'flutter1appfirebase.firebaseapp.com',
+        storageBucket: 'flutter1appfirebase.appspot.com',
+        measurementId: 'G-Y8KBBQF9LD');
+
+    const firebaseOption = {
+      'apiKey': "AIzaSyD0yGAIw0Mtx_89PnWOWjYgug0RQVsuUHA",
+      'authDomain': "flutter1appfirebase.firebaseapp.com",
+      'projectId': "flutter1appfirebase",
+      'storageBucket': "flutter1appfirebase.appspot.com",
+      'messagingSenderId': "690341637278",
+      'appId': "1:690341637278:web:355737232020fd271cdf8f",
+      'measurementId': "G-Y8KBBQF9LD"
+    };
+
+    return FutureBuilder<FirebaseApp>(
+      future: Firebase.initializeApp(options: firebaseOptions),
       builder: (BuildContext context, AsyncSnapshot<FirebaseApp> snapshot) {
         return StreamProvider<UserModel>.value(
             value: AuthService().userModel,
-            initialData: UserModel(uid: ''),
+            initialData: UserModel(''),
             child: const App());
       },
     );
