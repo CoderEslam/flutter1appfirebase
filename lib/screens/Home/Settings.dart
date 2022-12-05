@@ -21,8 +21,6 @@ class _SettingsFormState extends State<SettingsForm> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
-
-
     return StreamBuilder<UserData>(
       stream: DatabaseService(uid: user.uid).userData,
       builder: (context, snapshot) {
@@ -42,11 +40,10 @@ class _SettingsFormState extends State<SettingsForm> {
                 TextFormField(
                   decoration: textInputDecoration,
                   validator: (val) =>
-                  val!.isEmpty ? 'Please enter a name' : null,
-                  onChanged: (val) =>
-                      setState(() {
-                        _currentName = val;
-                      }),
+                      val!.isEmpty ? 'Please enter a name' : null,
+                  onChanged: (val) => setState(() {
+                    _currentName = val;
+                  }),
                 ),
                 const SizedBox(
                   height: 20.0,
@@ -68,12 +65,11 @@ class _SettingsFormState extends State<SettingsForm> {
                     value: (_currentStrength ?? 100).toDouble(),
                     activeColor: Colors.brown[_currentStrength.toInt() ?? 100],
                     inactiveColor:
-                    Colors.brown[_currentStrength.toInt() ?? 100],
+                        Colors.brown[_currentStrength.toInt() ?? 100],
                     min: 100.0,
                     max: 900.0,
                     divisions: 8,
-                    onChanged: (val) =>
-                        setState(() {
+                    onChanged: (val) => setState(() {
                           _currentStrength = val;
                         })),
                 ElevatedButton.icon(
@@ -88,7 +84,9 @@ class _SettingsFormState extends State<SettingsForm> {
             ),
           );
         } else {
-          return Container();
+          return const Center(
+            child: Text('Empty Data'),
+          );
         }
       },
     );
