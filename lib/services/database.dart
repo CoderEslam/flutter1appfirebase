@@ -1,6 +1,7 @@
-import 'dart:ffi';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter1appfirebase/Model/User.dart';
 import 'package:flutter1appfirebase/Model/brew.dart';
 
 class DatabaseService {
@@ -9,7 +10,7 @@ class DatabaseService {
   DatabaseService({required this.uid});
 
   // collection from firestore
-  final CollectionReference reference =
+  final CollectionReference<Map<String, dynamic>> reference =
       FirebaseFirestore.instance.collection('brews');
 
   Future<void> updateUserData(String sugars, String name, int strength) async {
@@ -19,17 +20,39 @@ class DatabaseService {
   }
 
   // Stream == LiveData
-  Stream<QuerySnapshot> get data {
-    return reference.snapshots();
+  Stream<List<Brew>> get data {
+    return reference.snapshots().map((event) {
+      return _brewListFromSnapShot(event);
+    });
   }
 
 // brew list? from snapshot
-  List<Brew> _brewListFromSnapShot(QuerySnapshot querySnapshot) {
+  List<Brew> _brewListFromSnapShot(
+      QuerySnapshot<Map<String, dynamic>> querySnapshot) {
     return querySnapshot.docs.map((doc) {
       return Brew(
-          name: doc.data().toString(),
-          sugars: doc.data().toString(),
-          strength: 12);
+          name: doc.data()['name'],
+          sugars: doc.data()['sugars'],
+          strength: doc.data()['strength']);
     }).toList();
+  }
+
+  // get user doc stream
+  Stream<UserData> get userData {
+    return reference
+        .doc(uid)
+        .snapshots()
+        .map((event) => _userDataFromSnapshot(event));
+  }
+
+  // use data from snapshot
+
+  UserData _userDataFromSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> documentSnapshot) {
+    return UserData(
+        uid,
+        documentSnapshot.data()!['name'],
+        documentSnapshot.data()!['sugars'],
+        documentSnapshot.data()!['strength']);
   }
 }
