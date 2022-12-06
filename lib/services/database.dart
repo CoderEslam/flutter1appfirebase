@@ -46,10 +46,9 @@ class DatabaseService {
   }
 
   // use data from snapshot
-
   UserData _userDataFromSnapshot(DocumentSnapshot documentSnapshot) {
     Map<String, dynamic> map = documentSnapshot.data() as Map<String, dynamic>;
-    print("MAAAAAAAAAAAAAAAAAAAP $map");
+    print("_userDataFromSnapshot $map");
     UserData userData = UserData(
         uid: uid,
         name: map['name'],

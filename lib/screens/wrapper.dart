@@ -11,7 +11,6 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     // to use data from provider or to access data from provider
     final user = Provider.of<UserModel>(context);
-    print("USER => " + user.uid);
     //return either Home or Auth Widget
     if (user.uid!='') {
       return Home();

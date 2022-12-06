@@ -34,6 +34,8 @@ class MyApp extends StatelessWidget {
       'measurementId': "G-Y8KBBQF9LD"
     };
 
+
+
     return FutureBuilder<FirebaseApp>(
       future: Firebase.initializeApp(options: firebaseOptions),
       builder: (BuildContext context, AsyncSnapshot<FirebaseApp> snapshot) {
